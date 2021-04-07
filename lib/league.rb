@@ -24,4 +24,49 @@ class League
     end
     team_roster
   end
+
+  def highest_paid_player
+    highest_paid = []
+    @teams.each do |team|
+      if highest_paid[0] == nil
+        highest_paid.push(team.captain_player)
+      elsif team.captain_player.salary == highest_paid[0].salary
+        highest_paid.push(team.captain_player)
+      elsif team.captain_player.salary > highest_paid[0].salary
+        highest_paid = [team.captain_player]
+      end
+    end
+    highest_paid
+  end
+
+  def most_expensive_player
+    highest_paid_player.map do |player|
+      player.name
+    end
+  end
+
+  def salary_ranges
+    top_end = highest_paid_player[0].salary / 1000000
+    (0..top_end).to_a
+  end
+
+  def salary_range_keys
+    salary_ranges.map do |million|
+      "Over #{million}M"
+    end
+  end
+
+  #couldn't get it in time
+  def players_by_salary_range
+    hash = Hash.new([])
+    salary_ranges.each do |million|
+      @teams.each do |team|
+        team.players.each do |player|
+          if (player.salary / 1_000_000) == million
+            hash["Over #{million}M"].push(player.name)
+          end
+        end
+      end
+    end
+  end
 end
