@@ -15,12 +15,22 @@ class Team
     end
   end
 
-  def captain
+  def captain_player
     highest_paid_player = @players.max_by do |player|
       player.salary
     end
-    highest_paid_player.name
+    highest_paid_player
   end
+
+  def captain
+    captain_player.name
+  end
+  # def captain
+  #   highest_paid_player = @players.max_by do |player|
+  #     player.salary
+  #   end
+  #   highest_paid_player.name
+  # end
 
   def positions_filled
     positions = []
@@ -30,5 +40,11 @@ class Team
       end
     end
     positions
+  end
+
+  def player_names
+    @players.map do |player|
+      player.name
+    end
   end
 end
